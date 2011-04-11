@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<XMLDB PATH="question/type/phnumerical/db" VERSION="20090315" COMMENT="XMLDB file for Moodle question/type/phnumerical">
+  <TABLES>
+    <TABLE NAME="ph_params" COMMENT="Question Params" NEXT="ph_stored">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="question"/>
+        <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="question" NEXT="value"/>
+        <FIELD NAME="value" TYPE="char" LENGTH="100" NOTNULL="false" DEFAULT="0.0" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="decorder"/>
+	<FIELD NAME="decorder" TYPE="int" LENGTH="11" NOTNULL="false" DEFAULT="0.0" SEQUENCE="false" ENUM="false" PREVIOUS="value"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for ph_params" NEXT="question"/>
+        <KEY NAME="question" TYPE="foreign" FIELDS="question" REFTABLE="questions" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="ph_stored" COMMENT="Question Params Stored Values" PREVIOUS="ph_params" NEXT="ph_parent">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="attemptid"/>
+        <FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="question"/>
+        <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="attemptid" NEXT="vars"/>
+        <FIELD NAME="vars" TYPE="char" LENGTH="1000" NOTNULL="true" DEFAULT="0.0" SEQUENCE="false" ENUM="false" PREVIOUS="question"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for ph_stored" NEXT="attemptid"/>
+        <KEY NAME="attemptid" TYPE="foreign" FIELDS="attemptid" REFTABLE="quiz_attempts" REFFIELDS="id" PREVIOUS="primary" NEXT="question"/>
+	<KEY NAME="question" TYPE="foreign" FIELDS="question" REFTABLE="questions" REFFIELDS="id" PREVIOUS="attemptid"/>
+      </KEYS>
+    </TABLE>
+<TABLE NAME="ph_parent" COMMENT="Question Parent" PREVIOUS="ph_stored">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="questionid"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="parentid"/>
+        <FIELD NAME="parentid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="questionid" NEXT="old_id"/>
+	<FIELD NAME="old_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="parentid" NEXT="old_parent"/>
+	<FIELD NAME="old_parent" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="old_id" />
+        </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for ph_parent" NEXT="questionid"/>
+        <KEY NAME="questionid" TYPE="foreign" FIELDS="questionid" REFTABLE="questions" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+         </TABLE>
+
+  </TABLES>
+</XMLDB>
